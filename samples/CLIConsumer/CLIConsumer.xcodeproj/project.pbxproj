@@ -1,0 +1,329 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		291F51BD1B99473000C165C6 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 291F51BC1B99473000C165C6 /* main.m */; };
+		98D5AC434BDFB8DC349A03E8 /* libPods-CLIConsumer.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 0A0B26ABCDC5373425E080A5 /* libPods-CLIConsumer.a */; };
+		B7F77F712730B512006BDDEE /* dummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7F77F702730B512006BDDEE /* dummy.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		291F51B71B99473000C165C6 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = /usr/share/man/man1/;
+			dstSubfolderSpec = 0;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 1;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		0A0B26ABCDC5373425E080A5 /* libPods-CLIConsumer.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-CLIConsumer.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		291F51B91B99473000C165C6 /* CLIConsumer */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = CLIConsumer; sourceTree = BUILT_PRODUCTS_DIR; };
+		291F51BC1B99473000C165C6 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5949E711176CA7D55DB1F878 /* Pods-CLIConsumer.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLIConsumer.debug.xcconfig"; path = "Pods/Target Support Files/Pods-CLIConsumer/Pods-CLIConsumer.debug.xcconfig"; sourceTree = "<group>"; };
+		B7F77F702730B512006BDDEE /* dummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = dummy.swift; sourceTree = "<group>"; };
+		DE58C87647762F5632373BB7 /* Pods-CLIConsumer.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-CLIConsumer.release.xcconfig"; path = "Pods/Target Support Files/Pods-CLIConsumer/Pods-CLIConsumer.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		291F51B61B99473000C165C6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				98D5AC434BDFB8DC349A03E8 /* libPods-CLIConsumer.a in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		291F51B01B99473000C165C6 = {
+			isa = PBXGroup;
+			children = (
+				291F51BB1B99473000C165C6 /* CLIConsumer */,
+				291F51BA1B99473000C165C6 /* Products */,
+				B1132EA3772BF84A49C06527 /* Pods */,
+				3EABA70547980806DD80EEF7 /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		291F51BA1B99473000C165C6 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				291F51B91B99473000C165C6 /* CLIConsumer */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		291F51BB1B99473000C165C6 /* CLIConsumer */ = {
+			isa = PBXGroup;
+			children = (
+				291F51BC1B99473000C165C6 /* main.m */,
+				B7F77F702730B512006BDDEE /* dummy.swift */,
+			);
+			path = CLIConsumer;
+			sourceTree = "<group>";
+		};
+		3EABA70547980806DD80EEF7 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				0A0B26ABCDC5373425E080A5 /* libPods-CLIConsumer.a */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		B1132EA3772BF84A49C06527 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				5949E711176CA7D55DB1F878 /* Pods-CLIConsumer.debug.xcconfig */,
+				DE58C87647762F5632373BB7 /* Pods-CLIConsumer.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		291F51B81B99473000C165C6 /* CLIConsumer */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 291F51C01B99473000C165C6 /* Build configuration list for PBXNativeTarget "CLIConsumer" */;
+			buildPhases = (
+				BBFE089FE74E2624933DD932 /* [CP] Check Pods Manifest.lock */,
+				291F51B51B99473000C165C6 /* Sources */,
+				291F51B61B99473000C165C6 /* Frameworks */,
+				291F51B71B99473000C165C6 /* CopyFiles */,
+				AA1E501E9D675640906F463B /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = CLIConsumer;
+			productName = CLIConsumer;
+			productReference = 291F51B91B99473000C165C6 /* CLIConsumer */;
+			productType = "com.apple.product-type.tool";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		291F51B11B99473000C165C6 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0640;
+				ORGANIZATIONNAME = Example;
+				TargetAttributes = {
+					291F51B81B99473000C165C6 = {
+						CreatedOnToolsVersion = 6.4;
+						LastSwiftMigration = 1250;
+					};
+				};
+			};
+			buildConfigurationList = 291F51B41B99473000C165C6 /* Build configuration list for PBXProject "CLIConsumer" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				English,
+				en,
+			);
+			mainGroup = 291F51B01B99473000C165C6;
+			productRefGroup = 291F51BA1B99473000C165C6 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				291F51B81B99473000C165C6 /* CLIConsumer */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		AA1E501E9D675640906F463B /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-CLIConsumer/Pods-CLIConsumer-resources.sh",
+				"${PODS_ROOT}/../../../out/files/MySample/0.0.1/staged/resources/a.png",
+				"${PODS_ROOT}/../../../out/files/MySample/0.0.1/staged/resources/lets/go/nuts/b.png",
+				"${PODS_ROOT}/../../../out/files/MySample/0.0.1/staged/resources/lets/go/runit.png",
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/a.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/b.png",
+				"${TARGET_BUILD_DIR}/${UNLOCALIZED_RESOURCES_FOLDER_PATH}/runit.png",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-CLIConsumer/Pods-CLIConsumer-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		BBFE089FE74E2624933DD932 /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-CLIConsumer-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		291F51B51B99473000C165C6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				B7F77F712730B512006BDDEE /* dummy.swift in Sources */,
+				291F51BD1B99473000C165C6 /* main.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin XCBuildConfiguration section */
+		291F51BE1B99473000C165C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		291F51BF1B99473000C165C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.10;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		291F51C11B99473000C165C6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 5949E711176CA7D55DB1F878 /* Pods-CLIConsumer.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Debug;
+		};
+		291F51C21B99473000C165C6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = DE58C87647762F5632373BB7 /* Pods-CLIConsumer.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = NO;
+				CLANG_ENABLE_MODULES = YES;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks @loader_path/../Frameworks";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 5.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		291F51B41B99473000C165C6 /* Build configuration list for PBXProject "CLIConsumer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				291F51BE1B99473000C165C6 /* Debug */,
+				291F51BF1B99473000C165C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		291F51C01B99473000C165C6 /* Build configuration list for PBXNativeTarget "CLIConsumer" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				291F51C11B99473000C165C6 /* Debug */,
+				291F51C21B99473000C165C6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 291F51B11B99473000C165C6 /* Project object */;
+}

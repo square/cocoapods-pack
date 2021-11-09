@@ -1,0 +1,43 @@
+AllCops:
+  TargetRubyVersion: 2.5
+
+Naming/FileName:
+  Exclude:
+    - 'samples/MySample/MySample.podspec'
+
+Metrics/LineLength:
+  Max: 336
+
+Metrics/BlockLength:
+  Max: 1500
+
+Metrics/ClassLength:
+  Enabled: false
+
+Metrics/MethodLength:
+  Max: 100
+
+Metrics/CyclomaticComplexity:
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Enabled: false
+
+Metrics/AbcSize:
+  Enabled: false
+
+AssignmentInCondition:
+  Enabled: false
+
+Style/Documentation:
+  Enabled: false
+
+Metrics/ParameterLists:
+  Enabled: false
+
+Lint/PercentStringArray:
+  Exclude:
+    - 'spec/xcode_builder_spec.rb'
+
+Layout/HeredocIndentation:
+  Enabled: false

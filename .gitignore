@@ -1,0 +1,10 @@
+.DS_Store
+pkg
+.idea/
+*.gem
+build
+tmp
+out
+samples/CLIConsumer/build
+samples/CLIConsumer/Pods
+samples/CLIConsumer/Podfile.lock
