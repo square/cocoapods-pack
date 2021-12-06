@@ -41,6 +41,10 @@ module Pod
           Dir.glob(File.join(path, 'BCSymbolMaps', '*.bcsymbolmap'))
         end
 
+        def empty?
+          Dir.empty?(File.join(path, 'Products'))
+        end
+
         def modules_path
           "#{framework_path}/Modules"
         end
@@ -119,6 +123,7 @@ module Pod
         FileUtils.rm_rf(stage_dir)
         FileUtils.mkdir_p(stage_dir)
         source_urls = @source_urls.map { |url| Config.instance.sources_manager.source_with_name_or_url(url) }.map(&:url)
+        staged_sources = false
         available_platforms(podspec).each do |platform|
           linkage = @use_static_frameworks ? :static : :dynamic
           podfile = podfile_from_spec(platform, podspec, source_urls, linkage, @is_local)
@@ -129,11 +134,14 @@ module Pod
           xcarchives = Dir.glob(File.join(xcodebuild_out_dir, '**', '*.xcarchive')).map do |path|
             XCArchive.new(path, podspec)
           end
-          stage_platform_xcframework(platform, sandbox, podspec, xcarchives, xcodebuild_out_dir, stage_dir)
+          unless xcarchives.all?(&:empty?)
+            stage_platform_xcframework(platform, sandbox, podspec, xcarchives, xcodebuild_out_dir, stage_dir)
+            staged_sources = true
+          end
         end
         stage_additional_artifacts(podspec, stage_dir)
         zip_output_path = pack(stage_dir, @project_zips_dir, podspec.name)
-        binary_podspec = generate_binary_podspec(podspec, stage_dir, zip_output_path)
+        binary_podspec = generate_binary_podspec(podspec, stage_dir, zip_output_path, staged_sources)
         validate_binary_podspec(binary_podspec)
         UI.message "Binary pod for #{podspec.name} created successfully!".green
       rescue XcodeBuilder::BuildError => e
@@ -212,9 +220,9 @@ module Pod
         copy_license(podspec, stage_dir)
       end
 
-      def generate_binary_podspec(source_podspec, stage_dir, zip_output_path)
+      def generate_binary_podspec(source_podspec, stage_dir, zip_output_path, staged_sources)
         name = source_podspec.name
-        spec_generator = SpecGenerator.new(source_podspec, @artifact_repo_url, zip_output_path)
+        spec_generator = SpecGenerator.new(source_podspec, @artifact_repo_url, zip_output_path, staged_sources)
         available_platforms(source_podspec).each do |platform|
           type = type_from_platform(platform)
           sandbox = @sandbox_map[platform.name]

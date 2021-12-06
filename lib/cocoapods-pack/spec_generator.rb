@@ -27,12 +27,13 @@ class SpecGenerator
                        vendored_libraries resource_bundles resources preserve_paths cocoapods_version swift_versions].freeze
   PLATFORM_ATTRIBUTES = %w[frameworks libraries requires_arc xcconfig pod_target_xcconfig user_target_xcconfig].freeze
 
-  attr_reader :podspec_path, :platforms, :artifact_repo_url
+  attr_reader :podspec_path, :platforms, :artifact_repo_url, :staged_sources
 
-  def initialize(source_podspec, artifact_repo_url, zip_output_path)
+  def initialize(source_podspec, artifact_repo_url, zip_output_path, staged_sources)
     @podspec_path = source_podspec
     @artifact_repo_url = artifact_repo_url
     @zip_output_path = zip_output_path
+    @staged_sources = staged_sources
     @platforms = []
   end
 
@@ -75,10 +76,12 @@ class SpecGenerator
   end
 
   def platform_spec_hash(platform_name, product_name, vendored_frameworks, vendored_libraries)
-    {
-      'vendored_frameworks' => ["#{platform_name}/#{product_name}"] + vendored_frameworks,
-      'vendored_libraries' => vendored_libraries
-    }
+    platform_hash = {}
+    platform_hash['vendored_frameworks'] ||= []
+    platform_hash['vendored_frameworks'] << "#{platform_name}/#{product_name}" if staged_sources
+    platform_hash['vendored_frameworks'] += vendored_frameworks
+    platform_hash['vendored_libraries'] = vendored_libraries
+    platform_hash
   end
 
   def platforms_sections
