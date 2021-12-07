@@ -1,13 +1,13 @@
 PATH
   remote: .
   specs:
-    cocoapods-pack (1.0.0)
+    cocoapods-pack (1.0.1)
       rubyzip (~> 1.1)
 
 GEM
   remote: https://rubygems.org/
   specs:
-    CFPropertyList (3.0.4)
+    CFPropertyList (3.0.5)
       rexml
     activesupport (5.2.6)
       concurrent-ruby (~> 1.0, >= 1.0.2)
@@ -81,7 +81,7 @@ GEM
     nap (1.1.0)
     netrc (0.11.0)
     parallel (1.21.0)
-    parser (3.0.2.0)
+    parser (3.0.3.1)
       ast (~> 2.4.1)
     pry (0.14.1)
       coderay (~> 1.1)
@@ -89,7 +89,7 @@ GEM
     public_suffix (4.0.6)
     rainbow (3.0.0)
     rake (13.0.6)
-    regexp_parser (2.1.1)
+    regexp_parser (2.2.0)
     rexml (3.2.5)
     rspec (3.10.0)
       rspec-core (~> 3.10.0)
@@ -113,7 +113,7 @@ GEM
       rubocop-ast (>= 0.6.0)
       ruby-progressbar (~> 1.7)
       unicode-display_width (>= 1.4.0, < 2.0)
-    rubocop-ast (1.13.0)
+    rubocop-ast (1.14.0)
       parser (>= 3.0.1.1)
     ruby-macho (2.5.1)
     ruby-progressbar (1.11.0)
