@@ -113,6 +113,7 @@ module Pod
 
       def run
         podspec = Specification.from_file(podspec_to_pack)
+        pod_source_fixup(podspec) unless @is_local
         @project_files_dir = File.expand_path(File.join(@out_dir, 'files', podspec.name, podspec.version.to_s))
         @project_zips_dir = File.expand_path(File.join(@out_dir, 'zips', podspec.name, podspec.version.to_s))
         @artifact_repo_url ||= podspec.attributes_hash['artifact_repo_url']
@@ -126,7 +127,7 @@ module Pod
         staged_sources = false
         available_platforms(podspec).each do |platform|
           linkage = @use_static_frameworks ? :static : :dynamic
-          podfile = podfile_from_spec(platform, podspec, source_urls, linkage, @is_local)
+          podfile = podfile_from_spec(platform, podspec, source_urls, linkage, true)
           sandbox = install(podfile, platform, podspec)
           @sandbox_map[platform.name] = sandbox
           xcodebuild_out_dir = File.join(sandbox.root.to_s, 'xcodebuild')
@@ -149,6 +150,22 @@ module Pod
       end
 
       private
+
+      def pod_source_fixup(podspec)
+        FileUtils.rm_rf(pod_source_dir(podspec.name))
+        FileUtils.mkdir_p(pod_source_dir(podspec.name))
+        download_pod_source(podspec)
+        target_podspec_path = File.join(pod_source_dir(podspec.name), File.basename(@podspec_path))
+        FileUtils.copy_file(File.join(podspecs_tmp_dir.to_s, File.basename(@podspec_path)), target_podspec_path)
+        podspec.defined_in_file = target_podspec_path
+      end
+
+      def download_pod_source(podspec)
+        target = pod_source_dir(podspec.name)
+        UI.puts "Downloading #{podspec.name} into #{target}...".yellow
+        request = Downloader::Request.new(:spec => podspec)
+        Downloader.download(request, target)
+      end
 
       def install(podfile, platform, podspec)
         UI.puts "\nInstalling #{podspec.name} for #{platform.name}...\n\n".yellow
@@ -344,7 +361,7 @@ module Pod
         platforms = Pod::Specification::DSL::PLATFORMS
         hash = podspec.attributes_hash
         globs = [Array(hash[attribute])] + platforms.map { |p| Array((hash[p.to_s] || {})[attribute]) }
-        globs.flatten.to_set.each { |glob| stage_glob(glob, stage_dir) }
+        globs.flatten.to_set.each { |glob| stage_glob(podspec, glob, stage_dir) }
       end
 
       def copy_resource_bundles(podspec, stage_dir)
@@ -361,7 +378,7 @@ module Pod
             end
           end
         end
-        resource_paths.uniq.each { |resource_path| stage_file(resource_path, stage_dir) }
+        resource_paths.uniq.each { |resource_path| stage_file(podspec, resource_path, stage_dir) }
       end
 
       def copy_resources(podspec, stage_dir)
@@ -370,36 +387,36 @@ module Pod
 
       def transplant_tree_with_attribute(podspec, attribute, stage_dir)
         globs = Array(podspec.attributes_hash[attribute])
-        globs.to_set.each { |glob| stage_glob(glob, stage_dir) }
+        globs.to_set.each { |glob| stage_glob(podspec, glob, stage_dir) }
       end
 
       def copy_license(podspec, stage_dir)
         return if podspec.license[:text]
 
         license_spec = podspec.license[:file]
-        license_file = license_spec ? File.join(podspec_dir, license_spec) : lookup_default_license_file
+        license_file = license_spec ? File.join(pod_source_dir(podspec.name), license_spec) : lookup_default_license_file(podspec)
         return unless license_file
 
-        stage_file(license_file, stage_dir)
+        stage_file(podspec, license_file, stage_dir)
       end
 
-      def lookup_default_license_file
-        podspec_dir_relative_glob(LICENSE_GLOB_PATTERNS).first
+      def lookup_default_license_file(podspec)
+        podspec_dir_relative_glob(podspec, LICENSE_GLOB_PATTERNS).first
       end
 
-      def stage_glob(glob, stage_dir)
-        glob = File.join(glob, '**', '*') if File.directory?(File.join(podspec_dir, glob))
-        podspec_dir_relative_glob(glob).each { |file_path| stage_file(file_path, stage_dir) }
+      def stage_glob(podspec, glob, stage_dir)
+        glob = File.join(glob, '**', '*') if File.directory?(File.join(pod_source_dir(podspec.name), glob))
+        podspec_dir_relative_glob(podspec, glob).each { |file_path| stage_file(podspec, file_path, stage_dir) }
       end
 
-      def podspec_dir_relative_glob(glob, options = {})
-        Pod::Sandbox::PathList.new(Pathname(podspec_dir)).glob(glob, options)
+      def podspec_dir_relative_glob(podspec, glob, options = {})
+        Pod::Sandbox::PathList.new(Pathname(pod_source_dir(podspec.name))).glob(glob, options)
       end
 
-      def stage_file(file_path, stage_dir)
+      def stage_file(podspec, file_path, stage_dir)
         pathname = Pathname(file_path)
 
-        relative_path_file = pathname.relative_path_from(Pathname(podspec_dir)).dirname.to_path
+        relative_path_file = pathname.relative_path_from(Pathname(pod_source_dir(podspec.name))).dirname.to_path
         raise Informative, "Bad Relative path #{relative_path_file}" if relative_path_file.start_with?('..')
 
         staged_folder = File.join(stage_dir, relative_path_file)
@@ -408,10 +425,6 @@ module Pod
         raise Informative, "File #{staged_file_path} already exists." if File.exist?(staged_file_path)
 
         FileUtils.copy_file(pathname.to_path, staged_file_path)
-      end
-
-      def podspec_dir
-        File.expand_path(File.dirname(podspec_to_pack))
       end
 
       def copy_headers(sandbox, target, stage_dir)
@@ -449,35 +462,41 @@ module Pod
       end
 
       def podspec_to_pack
-        @podspec_to_pack = begin
-                            path = @podspec_path
-                            if path =~ %r{https?://}
-                              require 'cocoapods/open-uri'
-                              output_path = podspecs_tmp_dir + File.basename(path)
-                              output_path.dirname.mkpath
-                              begin
-                                OpenURI.open_uri(path) do |io|
-                                  output_path.open('w') { |f| f << io.read }
-                                end
-                              rescue StandardError => e
-                                raise Informative, "Downloading a podspec from `#{path}` failed: #{e}"
-                              end
-                              @is_local = false
-                              output_path
-                            elsif Pathname.new(path).directory?
-                              raise Informative, "Podspec specified in `#{path}` is a directory."
-                            else
-                              pathname = Pathname.new(path)
-                              raise Informative, "Unable to find a spec named `#{path}'." unless pathname.exist? && path.include?('.podspec')
+        path = @podspec_path
+        if path =~ %r{https?://}
+          require 'cocoapods/open-uri'
+          output_path = podspecs_tmp_dir + File.basename(path)
+          output_path.dirname.mkpath
+          begin
+            OpenURI.open_uri(path) do |io|
+              output_path.open('w') { |f| f << io.read }
+            end
+          rescue StandardError => e
+            raise Informative, "Downloading a podspec from `#{path}` failed: #{e}"
+          end
+          @is_local = false
+          output_path
+        elsif Pathname.new(path).directory?
+          raise Informative, "Podspec specified in `#{path}` is a directory."
+        else
+          pathname = Pathname.new(path)
+          raise Informative, "Unable to find a spec named `#{path}'." unless pathname.exist? && path.include?('.podspec')
 
-                              @is_local = true
-                              pathname
-                            end
-                          end
+          @is_local = true
+          pathname
+        end
       end
 
       def podspecs_tmp_dir
-        Pathname.new(Dir.tmpdir) + "CocoaPods-Bin/#{CocoapodsPack::VERSION}/Pack_podspec"
+        @podspecs_tmp_dir ||= Pathname.new(Dir.tmpdir) + "CocoaPods-Bin/#{CocoapodsPack::VERSION}/Pack_podspec"
+      end
+
+      def pods_source_tmp_dir
+        @pods_source_tmp_dir ||= Pathname.new(Dir.tmpdir) + "CocoaPods-Bin/#{CocoapodsPack::VERSION}/Pack_source"
+      end
+
+      def pod_source_dir(name)
+        @is_local ? File.expand_path(File.dirname(@podspec_path)) : File.join(pods_source_tmp_dir.to_s, name)
       end
 
       def type_from_platform(platform)
