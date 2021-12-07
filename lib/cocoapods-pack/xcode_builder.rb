@@ -61,27 +61,27 @@ class XcodeBuilder
     user_interface.puts "\nBuilding #{target} for iOS...\n".yellow
     run(create_build_command(target, ios_sim_args, xcodebuild_args, :simulator))
     run(create_build_command(target, ios_device_args, xcodebuild_args, :device))
-    user_interface.puts +'iOS build successful.'.green << "\n\n"
+    user_interface.puts(+'iOS build successful.'.green << "\n\n")
   end
 
   def build_osx(target, xcodebuild_args)
     user_interface.puts "\nBuilding #{target} for macOS...\n".yellow
     run(create_build_command(target, macos_args, xcodebuild_args))
-    user_interface.puts +'macOS build successful.'.green << "\n\n"
+    user_interface.puts(+'macOS build successful.'.green << "\n\n")
   end
 
   def build_watchos(target, xcodebuild_args)
     user_interface.puts "\nBuilding #{target} for watchOS...\n".yellow
     run(create_build_command(target, watchos_sim_args, xcodebuild_args, :simulator))
     run(create_build_command(target, watchos_device_args, xcodebuild_args, :device))
-    user_interface.puts +'watchOS build successful.'.green << "\n\n"
+    user_interface.puts(+'watchOS build successful.'.green << "\n\n")
   end
 
   def build_tvos(target, xcodebuild_args)
     user_interface.puts "\nBuilding #{target} for tvOS...\n".yellow
     run(create_build_command(target, tvos_sim_args, xcodebuild_args, :simulator))
     run(create_build_command(target, tvos_device_args, xcodebuild_args, :device))
-    user_interface.puts +'tvOS build successful.'.green << "\n\n"
+    user_interface.puts(+'tvOS build successful.'.green << "\n\n")
   end
 
   def build_ios_settings(target, type)
