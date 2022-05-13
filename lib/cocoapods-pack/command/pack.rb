@@ -464,6 +464,16 @@ module Pod
                               end
                               @is_local = false
                               output_path
+                            elsif path =~ %r{file?://}
+                              require 'fileutils'
+                              require 'uri'
+                              output_path = podspecs_tmp_dir + File.basename(path)
+                              output_path.dirname.mkpath
+                              uri = URI(path)
+                              absolute_path = File.expand_path(File.join(uri.host, uri.path), Dir.pwd)                             
+                              FileUtils.cp absolute_path, output_path
+                              @is_local = false
+                              output_path
                             elsif Pathname.new(path).directory?
                               raise Informative, "Podspec specified in `#{path}` is a directory."
                             else
