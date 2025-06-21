@@ -81,7 +81,8 @@ module Pod
           ['--xcodebuild-opts', 'Options to be passed through to xcodebuild.'],
           ['--use-json', 'Use JSON for the generated binary podspec.'],
           ['--sources=https://github.com/artsy/Specs,master', 'The sources from which to pull dependant pods ' \
-            '(defaults to all available repos). Multiple sources must be comma-delimited.']
+            '(defaults to all available repos). Multiple sources must be comma-delimited.'],
+            ['--name', 'The name of the pod to pack.']
         ].concat(super)
       end
 
@@ -102,6 +103,7 @@ module Pod
         @sandbox_map = {}
         @project_files_dir = nil
         @project_zips_dir = nil
+        @name = argv.option('name')
         super
       end
 
@@ -439,10 +441,11 @@ module Pod
           source_urls.each { |u| source(u) }
           use_frameworks!(linkage: linkage)
           platform(platform.name, platform.deployment_target)
+          name = @name || podspec.name
           if local
-            pod podspec.name, path: podspec.defined_in_file.to_s
+            pod name, path: podspec.defined_in_file.to_s
           else
-            pod podspec.name, podspec: podspec.defined_in_file.to_s
+            pod name, podspec: podspec.defined_in_file.to_s
           end
           target CONCRETE_TARGET_NAME
         end

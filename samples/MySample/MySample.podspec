@@ -34,6 +34,10 @@ Pod::Spec.new do |s|
   s.private_header_files = 'MySample/Internal/**/*.h'
   s.exclude_files = 'MySample/Exclude'
 
+  s.subspec 'Sub' do |ss|
+    ss.source_files = 'MySample/SubPod/**/*.{h,m,swift}'
+  end
+
   s.ios.frameworks = 'iAd', 'SystemConfiguration', 'CoreTelephony', 'MobileCoreServices'
 
   s.user_target_xcconfig = { 'GCC_PREPROCESSOR_DEFINITIONS' => '$(inherited) SOMETHING=1' }
